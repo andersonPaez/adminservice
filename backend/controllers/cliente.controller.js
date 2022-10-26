@@ -16,8 +16,12 @@ function consultarClientes(peticion = request,respuesta = response){
 async function crearCliente(peticion = request, respuesta = response){
 
     const {identificacion,password} = peticion.body;
-
-   const resultado = await ClienteModelo.findOne({identificacion});
+    let resultado;
+    try {
+        resultado = await ClienteModelo.findOne({identificacion});
+    } catch (error) {
+        respuesta.status(500).send({mensaje:"Error al buscar"});
+    }
 
    if(resultado){
         respuesta.send({mensaje: "cliente ya existe"});
@@ -42,24 +46,31 @@ async function consultaCliente(peticion = request,respuesta = response){
     try {
         resultado = await ClienteModelo.findOne({$or: [{identificacion},{nombre},{email},{_id}]});
     } catch (error) {
-        console.log(error);
+        respuesta.status(500).send({mensaje: "Error al buscar"});
     }
 
     if(resultado){
         respuesta.send({mensaje: "cliente encontrado",resultado});
     }else{
-        respuesta.send({mensaje:"Cliente no encontrado"});
+        respuesta.send({mensaje:"Cliente no existe"});
     }
 }
 // Modifica un cliente
 async function modificarCliente(peticion = request,respuesta = response){
 
     const {_id, ...cliente} = peticion.body;
-    
-    await ClienteModelo.updateOne({_id:_id},cliente);
-    const clienteModificado = await ClienteModelo.findById(_id);
-    respuesta.send({mensaje:"Se modifico el cliente",clienteModificado});
-   
+    let resultado;
+    try {
+        resultado = await ClienteModelo.findById(_id);
+    } catch (error) {
+        respuesta.status(500).send({mensaje:"Error al buscar"});
+    }
+    if(resultado){
+        await ClienteModelo.updateOne({_id:_id},cliente);
+        respuesta.send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
+    }else{
+        respuesta.status(400).send({mensaje: "Cliente no existe"});
+    }
 }
 
 // Modifica la contraseña de un cliente
@@ -85,10 +96,13 @@ async function modificarContrasenia(peticion = request,respuesta = response){
 // Elimina un cliente por ID.
 async function borrarCliente(peticion = request,respuesta = response){
     const {_id} = peticion.body;
-
-    const eliminado = await ClienteModelo.findByIdAndDelete(_id);
-
-    respuesta.send({mensaje:`Se elimino el cliente: ${eliminado.nombre}`});
+    let eliminado;
+    try {
+        eliminado = await ClienteModelo.findByIdAndDelete(_id);
+    } catch (error) {
+        respuesta.status(500).send({mensaje: "Erro al eliminar"});
+    }
+    respuesta.status(200).send({mensaje:`Se elimino el cliente: ${eliminado.nombre}`});
 }
 
 module.exports = {consultarClientes,crearCliente,consultaCliente,modificarCliente,borrarCliente,modificarContrasenia};
