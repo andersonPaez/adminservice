@@ -1,7 +1,7 @@
 const express = require("express");
 const conexionDb = require("./conexiondb");
 const rutasCliente = require("../routers/cliente.routes");
-const rutasLogin = require("../routers/authen.routes");
+const rutasAutenticacion = require("../routers/authen.routes");
 
 class server{
     constructor(){
@@ -21,7 +21,7 @@ class server{
     rutas(){
         
         this.app.use("/",rutasCliente);
-        this.app.use("/",rutasLogin);
+        this.app.use("/",rutasAutenticacion);
     }
 }
 
