@@ -1,6 +1,6 @@
 const ClienteModelo = require("../models/cliente");
 const {request,response} = require("express");
-const {hashSync,genSaltSync} = require("bcryptjs");
+const {hashSync,genSaltSync,compareSync} = require("bcryptjs");
 
 // Consulta todos los cliente
 function consultarClientes(peticion = request,respuesta = response){
@@ -62,6 +62,26 @@ async function modificarCliente(peticion = request,respuesta = response){
    
 }
 
+// Modifica la contraseña de un cliente
+async function modificarContrasenia(peticion = request,respuesta = response){
+    
+    const {_id, password} = peticion.body;
+    let resultado;
+    try {
+        resultado = await ClienteModelo.findOne({_id});
+    } catch (error) {
+        respuesta.status(500).send({mensaje: "Hubo un error al buscar",error});
+    }
+
+    if(resultado){
+        peticion.body.password = hashSync(password,genSaltSync());
+        await ClienteModelo.updateOne({_id},peticion.body);
+        respuesta.status(200).send({mensaje: `Contraseña actualizada del cliente: ${resultado.nombre}`});
+    }else{
+        respuesta.status(400).send({mensaje:"Cliente no existe"});
+    }
+}
+
 // Elimina un cliente por ID.
 async function borrarCliente(peticion = request,respuesta = response){
     const {_id} = peticion.body;
@@ -71,4 +91,4 @@ async function borrarCliente(peticion = request,respuesta = response){
     respuesta.send({mensaje:`Se elimino el cliente: ${eliminado.nombre}`});
 }
 
-module.exports = {consultarClientes,crearCliente,consultaCliente,modificarCliente,borrarCliente};
+module.exports = {consultarClientes,crearCliente,consultaCliente,modificarCliente,borrarCliente,modificarContrasenia};

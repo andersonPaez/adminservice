@@ -1,7 +1,7 @@
 const express = require("express");
 const conexionDb = require("./conexiondb");
 const rutasCliente = require("../routers/cliente.routes");
-const rutasLogin = require("../routers/login.routes");
+const rutasLogin = require("../routers/authen.routes");
 
 class server{
     constructor(){
@@ -26,9 +26,3 @@ class server{
 }
 
 module.exports = server;
-
-
-// Codigo para carga de archivos:
-// npm i express-fileupload
-// const fileUpload = require("express-fileupload");
-// this.app.use(fileUpload({useTempFiles:true, tempFileDir: "/tmp/"}));
