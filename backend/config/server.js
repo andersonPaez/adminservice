@@ -11,7 +11,7 @@ class server{
 
         this.app.use(express.json());
         this.app.listen(this.puerto,()=>{
-            console.log("El servidor se esta ejecutando");
+            console.log(`El servidor se esta ejecutando en el puerto ${this.puerto}`);
         });
         this.rutas();
 
