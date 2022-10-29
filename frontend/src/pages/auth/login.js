@@ -1,25 +1,84 @@
 import React from "react";
- 
+import axios from "axios";
+
 //Estilos:
 import "./login.css";
 
+
 export default function login() {
+
+  function validarInico(event) {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    axios.post("http://127.0.0.1:3001/autenticacion",{email,password});
+    
+    console.log(`Email: ${email} Contraseña: ${password}`);
+  }
+
   return (
-    <div className="container">
-      <h2>Ingresar</h2>
-      <div className="form">
-        <form action="">
-          <div>
-            <label for="email">Correo Electronico:</label>
-            <input type="email" name="email" id="" placeholder="Ingrese el correo electronico"/>
+    <div className="login-page">
+      <div className="login-box">
+        <div className="login-logo">
+          <a href="#">
+            <b>Admin</b>Service
+          </a>
+        </div>
+        <div className="card">
+          <div className="card-body login-card-body">
+            <p className="login-box-msg">Iniciar Sesion</p>
+            {/* Formulario */}
+            <form onSubmit={validarInico}>  
+              <div className="input-group mb-3">
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="Correo Electronico"/>
+                <div className="input-group-append">
+                  <div className="input-group-text">
+                    <span className="fas fa-envelope"/>
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Contraseña" />
+                <div className="input-group-append">
+                  <div className="input-group-text">
+                    <span className="fas fa-lock" />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-8">
+                  <div className="icheck-primary">
+                    <input type="checkbox" id="remember" />
+                    <label htmlFor="remember">Recuerdame</label>
+                  </div>
+                </div>
+                <div className="col-4">
+                  <button type="submit" className="btn btn-primary btn-block">
+                    Iniciar
+                  </button>
+                </div>
+              </div>
+            </form>
+            {/* Fin del formulario*/}
+            <p className="mb-1">
+              <a href="forgot-password.html">Olvide mi contraseña</a>
+            </p>
+            <p className="mb-0">
+              <a href="register.html" className="text-center">
+                No tengo cuenta
+              </a>
+            </p>
           </div>
-          <div>
-            <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="" required />
-          </div>
-          <button type="submit">Ingresar</button>
-        </form>
-        <a href="#"><button>Cancelar</button></a>
+        </div>
       </div>
     </div>
   );

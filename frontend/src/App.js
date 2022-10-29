@@ -1,14 +1,21 @@
-//Estilos:
-import './App.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+import "./App.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 
-import Inicio from './pages/home/inicio';
+import {Routes, Route, Link} from "react-router-dom";
+
+import Inicio from "./pages/home/inicio";
+import Login from "./pages/auth/login";
 
 function App() {
   return (
-    <div>
-      <Inicio/>
+    <div className="App">
+
+      <Routes>
+        <Route path="/" element={<Inicio/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
     </div>
+    
   );
 }
 
