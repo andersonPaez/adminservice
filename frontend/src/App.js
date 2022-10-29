@@ -1,6 +1,8 @@
-import logo from './logo.svg';
+//Estilos:
 import './App.css';
-import Inicio from './pages/inicio/inicio';
+import 'bootstrap/dist/js/bootstrap.min.js';
+
+import Inicio from './pages/home/inicio';
 
 function App() {
   return (

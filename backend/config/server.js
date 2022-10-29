@@ -6,7 +6,7 @@ const rutasAutenticacion = require("../routers/authen.routes");
 class server{
     constructor(){
 
-        this.puerto = 3000;
+        this.puerto = 3001;
         this.app = express();
 
         this.app.use(express.json());
