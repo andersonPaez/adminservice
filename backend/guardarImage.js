@@ -17,3 +17,9 @@ function guardarImagen(req = request, res = response){
     res.send("Archivo cargado corectamente")
   })
 }
+
+// Codigo para carga de archivos:
+// npm i express-fileupload
+// Lo siguiente debe ir en el server:
+// const fileUpload = require("express-fileupload");
+// this.app.use(fileUpload({useTempFiles:true, tempFileDir: "/tmp/"}));

@@ -12,7 +12,7 @@ async function autenticacion(peticion = request, respuesta = response){
     if(cliente){
         const validacion = compareSync(password,cliente.password);
         if(validacion){
-            jwt.sign({_id: cliente.id},"grupo09adminservice",(error,token)=>{
+            jwt.sign({_id: cliente.id},"grupo09adminservice",{expiresIn:3600},(error,token)=>{
                 if (error) {
                     respuesta.status(500).send({mensaje: "Error al generar token",error});
                 }else{
@@ -20,10 +20,10 @@ async function autenticacion(peticion = request, respuesta = response){
                 } 
             });
         }else{
-            respuesta.send({mensaje:`Contraseña invalida para el cliente ${cliente.nombre}`});
+            respuesta.status(400).send({mensaje:`Contraseña invalida para el cliente ${cliente.nombre}`});
         }
     }else{
-        respuesta.status(400).send({mensaje:"Email no registra en la base de datos"});
+        respuesta.status(400).send({mensaje:"Correo no registrado"});
     }
 }
 
