@@ -12,7 +12,11 @@ export default function login() {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    axios.post("http://127.0.0.1:3001/autenticacion",{email,password});
+    axios.post("http://127.0.0.1:3001/autenticacion",{email,password}).then((respuesta)=>{
+        console.log(respuesta);
+    }).catch((error)=>{
+      console.error(error);
+    });
     
     console.log(`Email: ${email} Contraseña: ${password}`);
   }
