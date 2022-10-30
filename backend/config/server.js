@@ -2,6 +2,7 @@ const express = require("express");
 const conexionDb = require("./conexiondb");
 const rutasCliente = require("../routers/cliente.routes");
 const rutasAutenticacion = require("../routers/authen.routes");
+const cors = require("cors");
 
 class server{
     constructor(){
@@ -13,6 +14,7 @@ class server{
         this.app.listen(this.puerto,()=>{
             console.log(`El servidor se esta ejecutando en el puerto ${this.puerto}`);
         });
+        this.app.use(cors());
         this.rutas();
 
         conexionDb();

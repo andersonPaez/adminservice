@@ -1,24 +1,26 @@
 import React from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
-//Estilos:
 import "./login.css";
 
 
-export default function login() {
+export default function Login() {
 
-  function validarInico(event) {
+  const navigate = useNavigate();
+
+  async function validarInico(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    axios.post("http://127.0.0.1:3001/autenticacion",{email,password}).then((respuesta)=>{
-        console.log(respuesta);
-    }).catch((error)=>{
-      console.error(error);
-    });
-    
-    console.log(`Email: ${email} Contraseña: ${password}`);
+    try {
+      const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
+      localStorage.setItem("token",respuesta.data.token);
+      navigate("/");
+    } catch (error) {
+      alert(error.response.data.mensaje);
+    }
   }
 
   return (
