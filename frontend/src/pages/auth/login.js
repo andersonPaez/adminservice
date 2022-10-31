@@ -16,7 +16,7 @@ export default function Login() {
 
     try {
       const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
-      localStorage.setItem("token",respuesta.data.token);
+      sessionStorage.setItem("token",respuesta.data.token);
       navigate("/");
     } catch (error) {
       alert(error.response.data.mensaje);
