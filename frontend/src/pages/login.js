@@ -2,9 +2,6 @@ import React from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-import "./login.css";
-
-
 export default function Login() {
 
   const navigate = useNavigate();
@@ -17,7 +14,7 @@ export default function Login() {
     try {
       const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
       sessionStorage.setItem("token",respuesta.data.token);
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       alert(error.response.data.mensaje);
     }

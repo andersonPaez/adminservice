@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
-import Inicio from '../pages/home/inicio';
+import Inicio from '../pages/home';
 
 export default function RutaPrivada({children}) {
 
