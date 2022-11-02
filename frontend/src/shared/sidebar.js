@@ -50,7 +50,7 @@ export default function Sidebar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link">
+                  <Link to={"crear-usuario"}className="nav-link">
                     <i className="far fa-circle nav-icon" />
                     <p>Crear</p>
                   </Link>

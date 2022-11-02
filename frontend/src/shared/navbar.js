@@ -10,10 +10,10 @@ export default function Navbar() {
         </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link">Inicio</Link>
+          <Link to={"/admin"}className="nav-link">Dashboard</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link">Usuarios</Link>
+          <Link to={"/"}className="nav-link">Pagina principal</Link>
         </li>
       </ul>
     </nav>

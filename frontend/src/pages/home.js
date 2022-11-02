@@ -14,7 +14,7 @@ export default function Home() {
 				<ul>
 					<li><Link to={"/"}>Inicio</Link></li>
 					<li><Link>Registrarse</Link></li>
-					<li><Link to={"/admin"}></Link></li>
+					<li><Link to={"/admin"}>Dashboard</Link></li>
 				</ul>
 			</nav>
 			<article>
