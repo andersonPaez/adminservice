@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export default function Login() {
 
@@ -24,9 +24,9 @@ export default function Login() {
     <div className="login-page">
       <div className="login-box">
         <div className="login-logo">
-          <a href="#">
+          <Link>
             <b>Admin</b>Service
-          </a>
+          </Link>
         </div>
         <div className="card">
           <div className="card-body login-card-body">
