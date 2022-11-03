@@ -1,11 +1,16 @@
 import React from 'react'
 import ContentHeader from '../../shared/content-header'
+import {useForm} from "react-hook-form";
 
 export default function CrearUsuario() {
 
-  function submit(event){
-    event.preventDefault();
-    
+  const {register, handleSubmit, formState:{errors}} = useForm();
+
+  function submit(data){
+   // event.preventDefault(); // evita que al hacer click se recargue la pagina
+
+    console.log(data);
+
   }
 
   return (
@@ -19,7 +24,7 @@ export default function CrearUsuario() {
                 <div className="card-header">
                   <h3 className="card-title">Formulario</h3>
                 </div>
-                <form onSubmit={submit}>
+                <form onSubmit={handleSubmit(submit)}>
                   <div className="card-body">
                     <div className="form-group">
                       <label htmlFor="nombre">Nombre:</label>
@@ -27,8 +32,9 @@ export default function CrearUsuario() {
                         type="text"
                         className="form-control"
                         id="nombre"
-                        name="nombre"
+                        {...register("nombre",{required: true})}
                         placeholder="Nombres"/>
+                        {errors.nombre && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                       <label htmlFor="apellido">Apellidos:</label>
@@ -36,17 +42,18 @@ export default function CrearUsuario() {
                         type="text"
                         className="form-control"
                         id="apellido"
-                        name="apellido"
+                        {...register("apellido")}
                         placeholder="Apellidos"/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="tipoDocumento">Tipo documento:</label>
-                        <select className="form-control" name="tipoDocumento" id="tipoDocumento">
+                        <select className="form-control" {...register("tipoDocumento",{required: true})} id="tipoDocumento">
                             <option value={""}>Seleccione...</option>
                             <option value={"CC"}>CC - Cedula ciudadania</option>
                             <option value={"CE"}>CE - Cedula extranjeria</option>
                             <option value={"NIT"}>Nit - Numero identificion tributaria</option>
                         </select>
+                        {errors.tipoDocumento && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                       <label htmlFor="identificacion">No Identificacion:</label>
@@ -54,8 +61,9 @@ export default function CrearUsuario() {
                         type="text"
                         className="form-control"
                         id="identificacion"
-                        name="identificacion"
+                        {...register("identificacion",{required: true})}
                         placeholder="Numero de identificacion"/>
+                        {errors.identificacion && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                       <label htmlFor="email">Correo electronico:</label>
@@ -63,8 +71,9 @@ export default function CrearUsuario() {
                         type="email"
                         className="form-control"
                         id="email"
-                        name="email"
+                        {...register("email",{required: true})}
                         placeholder="Correo electronico"/>
+                        {errors.email && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                       <label htmlFor="telefono">Numero de Telefono/celular:</label>
@@ -72,8 +81,9 @@ export default function CrearUsuario() {
                         type="number"
                         className="form-control"
                         id="telefono"
-                        name="telefono"
+                        {...register("telefono",{required: true})}
                         placeholder="Numero de telefono/celular"/>
+                        {errors.telefono && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
 
                     <div className="row">
@@ -84,8 +94,9 @@ export default function CrearUsuario() {
                                 type="password"
                                 className="form-control"
                                 id="password"
-                                name="password"
+                                {...register("password",{required: true})}
                                 placeholder="Contraseña"/>
+                                {errors.password && <span style={{color:"red"}}>*campo requerido</span>}
                             </div>
                         </div>
                         <div className="col">
@@ -95,8 +106,9 @@ export default function CrearUsuario() {
                                 type="password"
                                 className="form-control"
                                 id="passwordConfirm"
-                                name="passwordConfirm"
+                                {...register("passwordConfirm",{required: true})}
                                 placeholder="Repite la contraseña"/>
+                                {errors.passwordConfirm && <span style={{color:"red"}}>*campo requerido</span>}
                             </div>
                         </div>
                     </div>

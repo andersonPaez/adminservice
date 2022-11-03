@@ -12,7 +12,7 @@ import CrearUsuario from "./pages/admin/crearUsuario";
 function App() {
   return (
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route index element={<Home/>}/>
           <Route path="/admin" element={<RutaPrivada> <Admin/> </RutaPrivada>}>
             <Route path="crear-usuario" element={<CrearUsuario/>}/>  {/*Cuando son rutas hijas no se le coloca el "/"*/}
           </Route>
