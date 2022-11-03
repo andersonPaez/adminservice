@@ -30,7 +30,7 @@ export default function CrearUsuario() {
                       <label htmlFor="nombre">Nombre:</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className={"form-control" + (errors.nombre ? " is-invalid":"")}
                         id="nombre"
                         {...register("nombre",{required: true})}
                         placeholder="Nombres"/>
