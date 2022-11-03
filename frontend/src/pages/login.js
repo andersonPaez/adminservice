@@ -1,9 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
-
-import "./login.css";
-
+import {Link, useNavigate} from "react-router-dom";
 
 export default function Login() {
 
@@ -16,8 +13,8 @@ export default function Login() {
 
     try {
       const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
-      localStorage.setItem("token",respuesta.data.token);
-      navigate("/");
+      sessionStorage.setItem("token",respuesta.data.token);
+      navigate("/admin");
     } catch (error) {
       alert(error.response.data.mensaje);
     }
@@ -27,9 +24,9 @@ export default function Login() {
     <div className="login-page">
       <div className="login-box">
         <div className="login-logo">
-          <a href="#">
+          <Link>
             <b>Admin</b>Service
-          </a>
+          </Link>
         </div>
         <div className="card">
           <div className="card-body login-card-body">

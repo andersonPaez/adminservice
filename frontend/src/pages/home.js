@@ -1,9 +1,8 @@
 import React from "react";
-import logo from "../../assets/image/adminServiceLogo.png";
-//Estilos:
-import "./inicio.css";
+import { Link } from "react-router-dom";
+import logo from "../assets/image/adminServiceLogo.png";
 
-export default function Inicio() {
+export default function Home() {
 	return (
 		<div>
 			<header>
@@ -13,9 +12,9 @@ export default function Inicio() {
 			</header>
 			<nav>
 				<ul>
-					<li><a>Inicio</a></li>
-					<li><a>Registrarse</a></li>
-					<li><a>Ingresar</a></li>
+					<li><Link to={"/"}>Inicio</Link></li>
+					<li><Link>Registrarse</Link></li>
+					<li><Link to={"/admin"}>Dashboard</Link></li>
 				</ul>
 			</nav>
 			<article>

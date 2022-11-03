@@ -1,21 +1,23 @@
 import "./App.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import "admin-lte/dist/js/adminlte.min.js";
 
 import {Routes, Route, Link} from "react-router-dom";
 
-import Inicio from "./pages/home/inicio";
-import Login from "./pages/auth/login";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import RutaPrivada from "./config/RutaPrivada";
+import Admin from "./pages/admin";
+import CrearUsuario from "./pages/admin/crearUsuario";
 
 function App() {
   return (
-    <div className="App">
-
-      <Routes>
-        <Route path="/" element={<Inicio/>}/>
-        <Route path="/login" element={<Login/>}/>
-      </Routes>
-    </div>
-    
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/admin" element={<RutaPrivada> <Admin/> </RutaPrivada>}>
+            <Route path="crear-usuario" element={<CrearUsuario/>}/>  {/*Cuando son rutas hijas no se le coloca el "/"*/}
+          </Route>
+          <Route path="/login" element={<Login/>}/>
+        </Routes>
   );
 }
 
