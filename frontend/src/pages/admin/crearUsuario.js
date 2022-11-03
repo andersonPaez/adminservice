@@ -6,10 +6,6 @@ export default function CrearUsuario() {
   function submit(event){
     event.preventDefault();
     
-    for (let index = 0; index < 8; index++) {
-      console.log(event.target[index].value);
-      
-    }
   }
 
   return (
