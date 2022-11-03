@@ -2,6 +2,16 @@ import React from 'react'
 import ContentHeader from '../../shared/content-header'
 
 export default function CrearUsuario() {
+
+  function submit(event){
+    event.preventDefault();
+    
+    for (let index = 0; index < 8; index++) {
+      console.log(event.target[index].value);
+      
+    }
+  }
+
   return (
     <>
       <ContentHeader titulo={"Crear usuario"} pathName={"Usuarios"} path={"/admin"} current={"crear usuario"}/>
@@ -13,7 +23,7 @@ export default function CrearUsuario() {
                 <div className="card-header">
                   <h3 className="card-title">Formulario</h3>
                 </div>
-                <form>
+                <form onSubmit={submit}>
                   <div className="card-body">
                     <div className="form-group">
                       <label htmlFor="nombre">Nombre:</label>
