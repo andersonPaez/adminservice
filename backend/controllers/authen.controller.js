@@ -12,19 +12,23 @@ async function autenticacion(peticion = request, respuesta = response){
     if(cliente){
         const validacion = compareSync(password,cliente.password);
         if(validacion){
-            jwt.sign({_id: cliente.id},"grupo09adminservice",{expiresIn:60},(error,token)=>{
+            jwt.sign({_id: cliente.id},"grupo09adminservice",{expiresIn:3600},(error,token)=>{
                 if (error) {
                     respuesta.status(500).send({mensaje: "Error al generar token",error});
                 }else{
-                    respuesta.send({autent: true, token});
+                    respuesta.status(200).send({autent: true, token});
                 } 
             });
         }else{
-            respuesta.status(400).send({mensaje:`Contraseña invalida para el cliente ${cliente.nombre}`});
+            respuesta.status(401).send({mensaje:`Contraseña invalida para el cliente ${cliente.nombre}`});
         }
     }else{
         respuesta.status(400).send({mensaje:"Correo no registrado"});
     }
 }
 
-module.exports = {autenticacion};
+function validarJWT(peticion = request, respuesta = response){
+    respuesta.status(200).send({auth:true});
+}
+
+module.exports = {autenticacion,validarJWT};

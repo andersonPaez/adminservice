@@ -24,14 +24,14 @@ async function crearCliente(peticion = request, respuesta = response){
     }
 
    if(resultado){
-        respuesta.send({mensaje: "cliente ya existe"});
+        respuesta.status(400).send({mensaje: "cliente ya existe"});
     }else{
         peticion.body.password = hashSync(password,genSaltSync()); // Encriptacion de la contraseña.
     
         ClienteModelo.create(peticion.body).then((clienteCreado)=>{
-            respuesta.send({mensaje: "El cliente fue creado", clienteCreado});
+            respuesta.status(200).send({mensaje: "El cliente fue creado", clienteCreado});
         }).catch(()=>{
-            respuesta.send({mensaje:"No se pudo crear el cliente"});
+            respuesta.status(400).send({mensaje:"No se pudo crear el cliente"});
         });
     }
 }
@@ -50,9 +50,9 @@ async function consultaCliente(peticion = request,respuesta = response){
     }
 
     if(resultado){
-        respuesta.send({mensaje: "cliente encontrado",resultado});
+        respuesta.status(200).send({mensaje: "cliente encontrado",resultado});
     }else{
-        respuesta.send({mensaje:"Cliente no existe"});
+        respuesta.status(400).send({mensaje:"Cliente no existe"});
     }
 }
 // Modifica un cliente
@@ -67,7 +67,7 @@ async function modificarCliente(peticion = request,respuesta = response){
     }
     if(resultado){
         await ClienteModelo.updateOne({_id:_id},cliente);
-        respuesta.send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
+        respuesta.status(200).send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
     }else{
         respuesta.status(400).send({mensaje: "Cliente no existe"});
     }

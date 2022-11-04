@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import {urlBackend} from "../config/constants";
 
 export default function Login() {
 
@@ -12,7 +13,7 @@ export default function Login() {
     const password = event.target.password.value;
 
     try {
-      const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
+      const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email,password:password});
       sessionStorage.setItem("token",respuesta.data.token);
       navigate("/admin");
     } catch (error) {

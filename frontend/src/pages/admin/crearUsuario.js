@@ -1,6 +1,8 @@
 import React from 'react'
 import ContentHeader from '../../shared/content-header'
 import {useForm} from "react-hook-form";
+import axios from 'axios';
+import { urlBackend } from '../../config/constants';
 
 export default function CrearUsuario() {
 
@@ -9,7 +11,13 @@ export default function CrearUsuario() {
   function submit(data){
    // event.preventDefault(); // evita que al hacer click se recargue la pagina
 
-    console.log(data);
+    axios.post(urlBackend + "/clientes",data)
+    .then((respuesta)=>{
+      alert("Se creo el usuario");
+    })
+    .catch((error)=>{
+      console.error("Hubo un error al crear");
+    });
 
   }
 
@@ -40,14 +48,15 @@ export default function CrearUsuario() {
                       <label htmlFor="apellido">Apellidos:</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className={"form-control" + (errors.apellido ? " is-invalid":"")}
                         id="apellido"
-                        {...register("apellido")}
+                        {...register("apellido",{required: true})}
                         placeholder="Apellidos"/>
+                        {errors.apellido && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="tipoDocumento">Tipo documento:</label>
-                        <select className="form-control" {...register("tipoDocumento",{required: true})} id="tipoDocumento">
+                        <select className={"form-control" + (errors.tipoDocumento ? " is-invalid":"")} {...register("tipoDocumento",{required: true})} id="tipoDocumento">
                             <option value={""}>Seleccione...</option>
                             <option value={"CC"}>CC - Cedula ciudadania</option>
                             <option value={"CE"}>CE - Cedula extranjeria</option>
@@ -59,17 +68,17 @@ export default function CrearUsuario() {
                       <label htmlFor="identificacion">No Identificacion:</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className={"form-control" + (errors.identificacion ? " is-invalid":"")}
                         id="identificacion"
                         {...register("identificacion",{required: true})}
-                        placeholder="Numero de identificacion"/>
+                        placeholder="Numero de identificacion" maxLength={10} minLength={6}/>
                         {errors.identificacion && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                       <label htmlFor="email">Correo electronico:</label>
                       <input
                         type="email"
-                        className="form-control"
+                        className={"form-control" + (errors.email ? " is-invalid":"")}
                         id="email"
                         {...register("email",{required: true})}
                         placeholder="Correo electronico"/>
@@ -79,7 +88,7 @@ export default function CrearUsuario() {
                       <label htmlFor="telefono">Numero de Telefono/celular:</label>
                       <input
                         type="number"
-                        className="form-control"
+                        className={"form-control" + (errors.telefono ? " is-invalid":"")}
                         id="telefono"
                         {...register("telefono",{required: true})}
                         placeholder="Numero de telefono/celular"/>
@@ -92,7 +101,7 @@ export default function CrearUsuario() {
                                 <label htmlFor="password">Contraseña:</label>
                                 <input
                                 type="password"
-                                className="form-control"
+                                className={"form-control" + (errors.password ? " is-invalid":"") }
                                 id="password"
                                 {...register("password",{required: true})}
                                 placeholder="Contraseña"/>
@@ -104,9 +113,10 @@ export default function CrearUsuario() {
                                 <label htmlFor="password">Confirmar contraseña:</label>
                                 <input
                                 type="password"
-                                className="form-control"
+                                className={"form-control" + (errors.passwordConfirm ? " is-invalid":"")}
                                 id="passwordConfirm"
-                                {...register("passwordConfirm",{required: true})}
+                                name='passwordConfirm'
+                                // {...register("passwordConfirm",{required: true})}
                                 placeholder="Repite la contraseña"/>
                                 {errors.passwordConfirm && <span style={{color:"red"}}>*campo requerido</span>}
                             </div>

@@ -13,10 +13,10 @@ const validarToken = require("../middlewares/validarToken");
 const rutasCliente = Router();
 
 rutasCliente.get("/clientes", [validarToken], consultarClientes);
-rutasCliente.post("/clientes", crearCliente);
-rutasCliente.post("/cliente", consultaCliente);
-rutasCliente.put("/modificarcliente", modificarCliente);
-rutasCliente.delete("/borrarcliente", borrarCliente);
-rutasCliente.put("/modificarcontrasenia", modificarContrasenia);
+rutasCliente.post("/clientes",[validarToken],crearCliente);
+rutasCliente.post("/cliente", [validarToken],consultaCliente);
+rutasCliente.put("/modificarcliente",[validarToken], modificarCliente);
+rutasCliente.delete("/borrarcliente",[validarToken], borrarCliente);
+rutasCliente.put("/modificarcontrasenia",[validarToken], modificarContrasenia);
 
 module.exports = rutasCliente;
