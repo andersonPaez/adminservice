@@ -8,15 +8,10 @@ export default function RutaPrivada({children}) {
 
     const token = sessionStorage.getItem("token");
 
-    axios.get(urlBackend + "/validar-token",{headers:{token:token}})
-    .then(()=>{
-
-    })
-    .catch(()=>{});
-
-    if(token){
-      return children;
-    }else {
-       return <Navigate to={"/login"}/>
-    }
+      if(token){
+        axios.get(urlBackend + "/validar-token",{headers:{token:token}})
+        .then(()=>{ return children; })
+        .catch(()=>{ <Navigate to={"/login"}/> });
+      }else return <Navigate to={"/login"}/>;
+   
 };
