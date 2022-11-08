@@ -36,6 +36,7 @@ export default function CrearUsuario() {
     }else {
       
       // Peticion para modificar cliente
+      data._id = usuario._id;
       axios.put(urlBackend + "/modificarcliente", data, {headers:{token:token}})
       .then((respuesta)=>{
         ALERT.fire({

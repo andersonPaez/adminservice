@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import ContentHeader from '../../shared/content-header'
-import {urlBackend} from "../../config/constants"
-import {FaUserEdit,FaUserTimes} from "react-icons/fa";
+import {ALERT, urlBackend} from "../../config/constants"
 import { Link } from 'react-router-dom';
 
 export default function ListarUsuarios() {
@@ -20,6 +19,21 @@ export default function ListarUsuarios() {
     return () => {}
   }, [])
   
+  function borrarUsuario(event){
+    console.log(event.target.id);
+    const idUsuario = event.target.id;
+
+    axios.delete(urlBackend + "/borrarcliente",{data:{_id:idUsuario}, headers:{token:token}})
+    .then(()=>{
+      ALERT.fire({
+        icon:"warning", title:"Usuario borrado!"});
+    })
+    .catch(()=>{
+      ALERT.fire({
+        icon:"error", title:"Error al borrar usuario :("});
+    });
+
+  }
 
   return (
     <>
@@ -124,13 +138,15 @@ export default function ListarUsuarios() {
                                   <Link to={"/admin/usuarios/crear/" + usuario._id}
                                     type="button"
                                     className="btn btn-info"> {/*Boton modificar*/}
-                                    <FaUserEdit size={20} className='nav-icon'/>
+                                    Modificar
                                   </Link>
-                                  <Link
+                                  <button
+                                    id={usuario._id}
+                                    onClick={borrarUsuario}
                                     type="button"
                                     className="btn btn-danger"> {/*Boton borrar*/}
-                                    <FaUserTimes size={20} className='nav-icon'/>
-                                  </Link>
+                                    Borrar
+                                  </button>
                                 </div>
                               </td>
                             </tr>

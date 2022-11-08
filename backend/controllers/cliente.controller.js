@@ -58,7 +58,7 @@ async function consultaCliente(peticion = request,respuesta = response){
 // Modifica un cliente
 async function modificarCliente(peticion = request,respuesta = response){
 
-    const {_id, ...cliente} = peticion.body;
+    const {_id, password, ...cliente} = peticion.body;
     let resultado;
     try {
         resultado = await ClienteModelo.findById(_id);
