@@ -2,19 +2,23 @@ import React from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {urlBackend} from "../config/constants";
+import { useForm } from "react-hook-form";
 
-export default function Login() {
+export default function Login(event) {
 
   const navigate = useNavigate();
+  const {register,handleSubmit,formState:{errors}} = useForm();
 
-  async function validarInico(event) {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+  async function validarInico(data) {
+    
+    const email = data.email;
+    const password = data.password;
+
+    console.log(data);
 
     try {
       const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email,password:password});
-      sessionStorage.setItem("token",respuesta.data.token);
+      localStorage.setItem("token",respuesta.data.token);
       navigate("/admin");
     } catch (error) {
       alert(error.response.data.mensaje);
@@ -33,11 +37,11 @@ export default function Login() {
           <div className="card-body login-card-body">
             <p className="login-box-msg">Iniciar Sesion</p>
             {/* Formulario */}
-            <form onSubmit={validarInico}>  
+            <form onSubmit={handleSubmit(validarInico)}>  
               <div className="input-group mb-3">
                 <input
                   type="email"
-                  name="email"
+                  {...register("email")}
                   className="form-control"
                   placeholder="Correo Electronico"/>
                 <div className="input-group-append">
@@ -49,7 +53,7 @@ export default function Login() {
               <div className="input-group mb-3">
                 <input
                   type="password"
-                  name="password"
+                  {...register("password")}
                   className="form-control"
                   placeholder="Contraseña" />
                 <div className="input-group-append">

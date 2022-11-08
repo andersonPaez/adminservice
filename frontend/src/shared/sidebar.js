@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import iconAdmin from "../assets/icons/user-tie-solid.svg";
+import {FaUsers,FaUserPlus,FaUserEdit} from "react-icons/fa";
 
 export default function Sidebar() {
 
@@ -36,7 +37,7 @@ export default function Sidebar() {
             data-accordion="false">
             <li className={ "nav-item" + (itemUsuarioOpen ? " menu-open": "" ) } >
               <div className="nav-link" onClick={ ()=>{setItemUsuarioOpen( !itemUsuarioOpen )}}>
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <FaUsers className="nav-icon"/>
                 <p>
                   Usuarios
                   <i className="right fas fa-angle-left" />
@@ -44,15 +45,15 @@ export default function Sidebar() {
               </div>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link className="nav-link">
-                    <i className="far fa-circle nav-icon" />
+                  <Link to={"usuarios/listar"} className="nav-link">
+                    <FaUserEdit className="nav-icon"/>
                     <p>Listar</p>
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={"crear-usuario"}className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Crear</p>
+                  <Link to={"usuarios/crear/new"}className="nav-link">
+                    <FaUserPlus className="nav-icon"/>
+                    <p>Crear o modificar</p>
                   </Link>
                 </li>
               </ul>

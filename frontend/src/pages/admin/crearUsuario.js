@@ -1,26 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ContentHeader from '../../shared/content-header'
 import {useForm} from "react-hook-form";
 import axios from 'axios';
-import { urlBackend } from '../../config/constants';
+import { ALERT, urlBackend } from '../../config/constants';
+import { useParams } from 'react-router-dom';
 
 export default function CrearUsuario() {
 
+  const params = useParams();
+
+  const token = localStorage.getItem("token");
   const {register, handleSubmit, formState:{errors}} = useForm();
+  const [usuario, setUsuario] = useState({});
 
   function submit(data){
-   // event.preventDefault(); // evita que al hacer click se recargue la pagina
-
-    axios.post(urlBackend + "/clientes",data)
+    axios.post(urlBackend + "/clientes", data, {headers:{token:token}})
     .then((respuesta)=>{
       alert("Se creo el usuario");
     })
     .catch((error)=>{
       console.error("Hubo un error al crear");
     });
-
   }
 
+  useEffect(() => {
+    if(params.id !== "new"){
+      axios.post(urlBackend + "/cliente", {_id:params.id},{headers:{token:token}})
+      .then((res)=>{
+      setUsuario(res.data);
+      })
+      .catch((error)=>{
+      ALERT.fire({
+        icon: 'error',
+        title: 'Error al buscar Usuario'
+      });
+    });
+    }
+    return () => {}
+  }, []);
+  
   return (
     <>
       <ContentHeader titulo={"Crear usuario"} pathName={"Usuarios"} path={"/admin"} current={"crear usuario"}/>
@@ -41,7 +59,8 @@ export default function CrearUsuario() {
                         className={"form-control" + (errors.nombre ? " is-invalid":"")}
                         id="nombre"
                         {...register("nombre",{required: true})}
-                        placeholder="Nombres"/>
+                        placeholder="Nombres"
+                        defaultValue={params.id !== "new" ? usuario.nombre : ""}/>
                         {errors.nombre && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">

@@ -5,6 +5,6 @@ const validarToken = require("../middlewares/validarToken");
 const rutasAutenticacion = Router();
 
 rutasAutenticacion.post("/autenticacion", autenticacion);
-rutasAutenticacion.get("/verificar-token",[validarToken], validarJWT);
+rutasAutenticacion.get("/validar-token",[validarToken], validarJWT);
 
 module.exports = rutasAutenticacion;

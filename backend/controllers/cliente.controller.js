@@ -50,7 +50,7 @@ async function consultaCliente(peticion = request,respuesta = response){
     }
 
     if(resultado){
-        respuesta.status(200).send({mensaje: "cliente encontrado",resultado});
+        respuesta.status(200).send(resultado);
     }else{
         respuesta.status(400).send({mensaje:"Cliente no existe"});
     }

@@ -1,24 +1,42 @@
 import "./App.css";
 import "admin-lte/dist/js/adminlte.min.js";
-
-import {Routes, Route, Link} from "react-router-dom";
-
-import Home from "./pages/home";
-import Login from "./pages/login";
-import RutaPrivada from "./config/RutaPrivada";
-import Admin from "./pages/admin";
-import CrearUsuario from "./pages/admin/crearUsuario";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { urlBackend } from "./config/constants";
+import Cargando from "./shared/cargando";
+import RoutesApp from "./routes";
 
 function App() {
-  return (
-        <Routes>
-          <Route index element={<Home/>}/>
-          <Route path="/admin" element={<RutaPrivada> <Admin/> </RutaPrivada>}>
-            <Route path="crear-usuario" element={<CrearUsuario/>}/>  {/*Cuando son rutas hijas no se le coloca el "/"*/}
-          </Route>
-          <Route path="/login" element={<Login/>}/>
-        </Routes>
-  );
+
+  console.log("App renderizado");
+
+  const token = localStorage.getItem("token");  
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    console.log("Ejecutando useEffect");
+    axios.get(urlBackend + "/validar-token",{headers:{token:token}})
+    .then(()=>{ 
+      setIsAuth(true);
+     })
+    .catch(()=>{
+      setIsAuth(false);
+    })
+    .finally(()=>{
+      setIsLoading(false);
+    });
+  
+    return () => {}
+  }, [])
+
+  if(isLoading){
+    return <Cargando/>;
+  }else{
+    return (
+      <RoutesApp isAuth={isAuth}/>
+    );
+  }
 }
 
 export default App;
