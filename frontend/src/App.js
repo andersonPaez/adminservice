@@ -1,5 +1,6 @@
 import "./App.css";
 import "admin-lte/dist/js/adminlte.min.js";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { urlBackend } from "./config/constants";
@@ -10,18 +11,23 @@ function App() {
 
   console.log("App renderizado");
 
-  const token = localStorage.getItem("token");  
+  const token = localStorage.getItem("token");
+
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    console.log("Ejecutando useEffect");
-    axios.get(urlBackend + "/validar-token",{headers:{token:token}})
-    .then(()=>{ 
+
+    console.log("Se ejecuto useEffect en App");
+    
+    axios.get(urlBackend + "/validar-token",{ headers:{ token:token } })
+    .then((res)=>{ 
       setIsAuth(true);
+      console.log("Esta autorizado: " + res.data.auth);
      })
-    .catch(()=>{
+    .catch((error)=>{
       setIsAuth(false);
+      console.error(error.response.data.mensaje);
     })
     .finally(()=>{
       setIsLoading(false);

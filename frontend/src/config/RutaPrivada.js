@@ -4,10 +4,11 @@ import { Navigate } from 'react-router-dom';
 export default function RutaPrivada({children, isAuth}) {
 
     console.log("Ruta privada renderizada.");
-    console.log(isAuth);
+    console.log("Valor de isAuth: " + isAuth);
     
     if(isAuth){
-      return children
-    }else return <Navigate to={"/login"}/>;
-   
+      return children;
+    }else return (
+    <Navigate to={"/login"}/>
+    );
 };

@@ -66,7 +66,10 @@ async function modificarCliente(peticion = request,respuesta = response){
         respuesta.status(500).send({mensaje:"Error al buscar"});
     }
     if(resultado){
-        await ClienteModelo.updateOne({_id:_id},cliente);
+
+        peticion.body.password = hashSync(password,genSaltSync()); // Encriptacion de la contraseña.
+
+        await ClienteModelo.updateOne({_id:_id},peticion.body);
         respuesta.status(200).send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
     }else{
         respuesta.status(400).send({mensaje: "Cliente no existe"});

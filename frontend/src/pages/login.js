@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {urlBackend} from "../config/constants";
 import { useForm } from "react-hook-form";
 
-export default function Login(event) {
+export default function Login() {
 
   const navigate = useNavigate();
   const {register,handleSubmit,formState:{errors}} = useForm();
@@ -17,7 +17,7 @@ export default function Login(event) {
     console.log(data);
 
     try {
-      const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email,password:password});
+      const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email, password:password});
       localStorage.setItem("token",respuesta.data.token);
       navigate("/admin");
     } catch (error) {

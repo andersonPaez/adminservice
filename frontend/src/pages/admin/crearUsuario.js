@@ -14,13 +14,44 @@ export default function CrearUsuario() {
   const [usuario, setUsuario] = useState({});
 
   function submit(data){
-    axios.post(urlBackend + "/clientes", data, {headers:{token:token}})
-    .then((respuesta)=>{
-      alert("Se creo el usuario");
-    })
-    .catch((error)=>{
-      console.error("Hubo un error al crear");
-    });
+
+    // Condicion para ejecutar peticiones
+    if(params.id === "new"){
+      
+      // Peticion para crear cliente
+      axios.post(urlBackend + "/clientes", data, {headers:{token:token}})
+      .then((respuesta)=>{
+        ALERT.fire({
+          icon: 'success',
+          title: 'Creacion exitosa!'
+        });
+      })
+      .catch((error)=>{
+        ALERT.fire({
+          icon: 'error',
+          title: 'Error al crear usuario :('
+        });
+        console.error("Hubo un error al crear");
+      });
+    }else {
+      
+      // Peticion para modificar cliente
+      axios.put(urlBackend + "/modificarcliente", data, {headers:{token:token}})
+      .then((respuesta)=>{
+        ALERT.fire({
+          icon: 'success',
+          title: 'Modificacion exitosa!'
+        });
+      })
+      .catch((error)=>{
+        console.error("Hubo un error al crear");
+        ALERT.fire({
+          icon: 'error',
+          title: 'Error al modificar usuario :('
+        });
+      });
+    }
+
   }
 
   useEffect(() => {
@@ -70,12 +101,15 @@ export default function CrearUsuario() {
                         className={"form-control" + (errors.apellido ? " is-invalid":"")}
                         id="apellido"
                         {...register("apellido",{required: true})}
-                        placeholder="Apellidos"/>
+                        placeholder="Apellidos"
+                        defaultValue={params.id !== "new" ? usuario.apellido : ""}/>
                         {errors.apellido && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="tipoDocumento">Tipo documento:</label>
-                        <select className={"form-control" + (errors.tipoDocumento ? " is-invalid":"")} {...register("tipoDocumento",{required: true})} id="tipoDocumento">
+                        <select 
+                        defaultValue={params.id !== "new" ? usuario.tipoDocumento : ""} 
+                        className={"form-control" + (errors.tipoDocumento ? " is-invalid":"")} {...register("tipoDocumento",{required: true})} id="tipoDocumento">
                             <option value={""}>Seleccione...</option>
                             <option value={"CC"}>CC - Cedula ciudadania</option>
                             <option value={"CE"}>CE - Cedula extranjeria</option>
@@ -90,7 +124,8 @@ export default function CrearUsuario() {
                         className={"form-control" + (errors.identificacion ? " is-invalid":"")}
                         id="identificacion"
                         {...register("identificacion",{required: true})}
-                        placeholder="Numero de identificacion" maxLength={10} minLength={6}/>
+                        placeholder="Numero de identificacion" maxLength={10} minLength={6}
+                        defaultValue={params.id !== "new" ? usuario.identificacion : ""}/>
                         {errors.identificacion && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
@@ -100,7 +135,8 @@ export default function CrearUsuario() {
                         className={"form-control" + (errors.email ? " is-invalid":"")}
                         id="email"
                         {...register("email",{required: true})}
-                        placeholder="Correo electronico"/>
+                        placeholder="Correo electronico"
+                        defaultValue={params.id !== "new" ? usuario.email : ""}/>
                         {errors.email && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
                     <div className="form-group">
@@ -110,7 +146,8 @@ export default function CrearUsuario() {
                         className={"form-control" + (errors.telefono ? " is-invalid":"")}
                         id="telefono"
                         {...register("telefono",{required: true})}
-                        placeholder="Numero de telefono/celular"/>
+                        placeholder="Numero de telefono/celular"
+                        defaultValue={params.id !== "new" ? usuario.telefono : ""}/>
                         {errors.telefono && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
 
@@ -123,7 +160,8 @@ export default function CrearUsuario() {
                                 className={"form-control" + (errors.password ? " is-invalid":"") }
                                 id="password"
                                 {...register("password",{required: true})}
-                                placeholder="Contraseña"/>
+                                placeholder="Contraseña"
+                                defaultValue={params.id !== "new" ? usuario.password : ""}/>
                                 {errors.password && <span style={{color:"red"}}>*campo requerido</span>}
                             </div>
                         </div>
