@@ -9,6 +9,7 @@ export default function ListarUsuarios() {
   const token = localStorage.getItem("token");
   
   const [usuarios, setUsuarios] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios.get(urlBackend + "/clientes",{headers:{token:token}})
@@ -17,7 +18,7 @@ export default function ListarUsuarios() {
     });
   
     return () => {}
-  }, [])
+  }, [reload])
   
   function borrarUsuario(event){
     console.log(event.target.id);
@@ -25,6 +26,7 @@ export default function ListarUsuarios() {
 
     axios.delete(urlBackend + "/borrarcliente",{data:{_id:idUsuario}, headers:{token:token}})
     .then(()=>{
+      setReload(!reload);
       ALERT.fire({
         icon:"warning", title:"Usuario borrado!"});
     })

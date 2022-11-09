@@ -17,21 +17,24 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-
     console.log("Se ejecuto useEffect en App");
     
-    axios.get(urlBackend + "/validar-token",{ headers:{ token:token } })
-    .then((res)=>{ 
-      setIsAuth(true);
-      console.log("Esta autorizado: " + res.data.auth);
-     })
-    .catch((error)=>{
-      setIsAuth(false);
-      console.error(error.response.data.mensaje);
-    })
-    .finally(()=>{
+    if(token){
+      axios.get(urlBackend + "/validar-token",{ headers:{ token:token } })
+      .then((res)=>{ 
+        setIsAuth(true);
+        console.log("Esta autorizado: " + res.data.auth);
+       })
+      .catch((error)=>{
+        setIsAuth(false);
+        console.error(error.response.data.mensaje);
+      })
+      .finally(()=>{
+        setIsLoading(false);
+      });
+    }else{
       setIsLoading(false);
-    });
+    }
   
     return () => {}
   }, [])
@@ -40,7 +43,7 @@ function App() {
     return <Cargando/>;
   }else{
     return (
-      <RoutesApp isAuth={isAuth}/>
+      <RoutesApp isAuth={isAuth} setIsAuth={setIsAuth}/>
     );
   }
 }

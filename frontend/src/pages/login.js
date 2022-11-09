@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {urlBackend} from "../config/constants";
 import { useForm } from "react-hook-form";
 
-export default function Login() {
+export default function Login({setIsAuth}) {
 
   const navigate = useNavigate();
   const {register,handleSubmit,formState:{errors}} = useForm();
@@ -14,12 +14,11 @@ export default function Login() {
     const email = data.email;
     const password = data.password;
 
-    console.log(data);
-
     try {
       const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email, password:password});
       localStorage.setItem("token",respuesta.data.token);
       navigate("/admin");
+      setIsAuth(true);
     } catch (error) {
       alert(error.response.data.mensaje);
     }

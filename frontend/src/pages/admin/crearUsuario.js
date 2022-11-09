@@ -14,7 +14,6 @@ export default function CrearUsuario() {
   const [usuario, setUsuario] = useState({});
 
   function submit(data){
-
     // Condicion para ejecutar peticiones
     if(params.id === "new"){
       
@@ -52,7 +51,6 @@ export default function CrearUsuario() {
         });
       });
     }
-
   }
 
   useEffect(() => {

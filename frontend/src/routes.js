@@ -7,7 +7,7 @@ import Admin from "./pages/admin";
 import CrearUsuario from "./pages/admin/crearUsuario";
 import ListarUsuarios from './pages/admin/listarUsuarios';
 
-export default function RoutesApp({isAuth}) {
+export default function RoutesApp({isAuth, setIsAuth}) {
   return (
     <Routes>
         <Route index element={<Home/>}/>
@@ -15,7 +15,7 @@ export default function RoutesApp({isAuth}) {
           <Route path="usuarios/crear/:id" element={<CrearUsuario/>}/> {/*Cuando son rutas hijas no se le coloca el "/"*/}
           <Route path="usuarios/listar" element={<ListarUsuarios/>}/>
         </Route>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/login" element={<Login setIsAuth={setIsAuth}/>}/>
       </Routes>
   )
 }
