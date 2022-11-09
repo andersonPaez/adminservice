@@ -6,6 +6,7 @@ import RutaPrivada from "./config/RutaPrivada";
 import Admin from "./pages/admin";
 import CrearUsuario from "./pages/admin/crearUsuario";
 import ListarUsuarios from './pages/admin/listarUsuarios';
+import Registro from './pages/registro';
 
 export default function RoutesApp({isAuth, setIsAuth}) {
   return (
@@ -16,6 +17,7 @@ export default function RoutesApp({isAuth, setIsAuth}) {
           <Route path="usuarios/listar" element={<ListarUsuarios/>}/>
         </Route>
         <Route path="/login" element={<Login setIsAuth={setIsAuth}/>}/>
+        <Route path="/registro" element={<Registro/>} />
       </Routes>
   )
 }

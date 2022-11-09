@@ -80,9 +80,14 @@ export default function Login({setIsAuth}) {
               <a href="forgot-password.html">Olvide mi contraseña</a>
             </p>
             <p className="mb-0">
-              <a href="register.html" className="text-center">
-                No tengo cuenta
-              </a>
+              <Link to={"/registro"} className="text-center">
+                Registrarse
+              </Link>
+            </p>
+            <p className="mb-0">
+              <Link to={"/"} className="text-center">
+                Pagina principal
+              </Link>
             </p>
           </div>
         </div>
