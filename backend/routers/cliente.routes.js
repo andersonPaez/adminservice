@@ -14,6 +14,7 @@ const rutasCliente = Router();
 
 rutasCliente.get("/clientes", [validarToken], consultarClientes);
 rutasCliente.post("/clientes",[validarToken],crearCliente);
+rutasCliente.post("/registro", crearCliente);
 rutasCliente.post("/cliente", [validarToken],consultaCliente);
 rutasCliente.put("/modificarcliente",[validarToken], modificarCliente);
 rutasCliente.delete("/borrarcliente",[validarToken], borrarCliente);

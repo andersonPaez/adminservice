@@ -10,7 +10,7 @@ export default function CrearUsuario() {
   const params = useParams();
 
   const token = localStorage.getItem("token");
-  const {register, handleSubmit, formState:{errors}} = useForm();
+  const {register, handleSubmit, formState:{errors},reset} = useForm();
   const [usuario, setUsuario] = useState({});
 
   function submit(data){
@@ -58,6 +58,7 @@ export default function CrearUsuario() {
       axios.post(urlBackend + "/cliente", {_id:params.id},{headers:{token:token}})
       .then((res)=>{
       setUsuario(res.data);
+      reset(res.data)
       })
       .catch((error)=>{
       ALERT.fire({

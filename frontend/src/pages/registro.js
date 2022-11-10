@@ -1,7 +1,32 @@
+import axios from "axios";
 import React from "react";
-import {Link} from "react-router-dom";
+import { useForm } from "react-hook-form";
+import {Link, useNavigate} from "react-router-dom";
+import { ALERT, urlBackend } from "../config/constants";
 
 export default function Registro() {
+  
+  const navigate = useNavigate();
+  const {register,handleSubmit,formState:{errors},watch,setError,clearErrors} = useForm();
+
+  function registrarUsuario(data){
+    axios.post(urlBackend + "/registro", data)
+      .then((respuesta)=>{
+        ALERT.fire({
+          icon: 'success',
+          title: 'Registro exitoso!'
+        });
+        navigate("/login");
+      })
+      .catch((error)=>{
+        ALERT.fire({
+          icon: 'error',
+          title: 'Error al registrar usuario :('
+        });
+        console.error("Hubo un error registrar nuevo");
+      });
+  }
+
   return (
     <div className="register-page" style={{minHeight: "570.781px"}}>
       <div className="register-box">
@@ -13,12 +38,13 @@ export default function Registro() {
         <div className="card">
           <div className="card-body register-card-body">
             <p className="login-box-msg">Registrarse</p>
-            <form action="../../index.html" method="post">
+            <form onSubmit={handleSubmit(registrarUsuario)}>
               <div className="input-group mb-3">
                 <input
                   type="text"
                   id="nombre"
-                  className="form-control"
+                  {...register("nombre",{required:true})}
+                  className={"form-control"+ (errors.nombre ? " is-invalid": "")}
                   placeholder="Nombre"/>
                 <div className="input-group-append">
                   <div className="input-group-text">
@@ -30,7 +56,8 @@ export default function Registro() {
                 <input
                   type="text"
                   id="apellido"
-                  className="form-control"
+                  {...register("apellido",{required:true})}
+                  className={"form-control"+ (errors.apellido ? " is-invalid": "")}
                   placeholder="Apellidos"/>
                 <div className="input-group-append">
                   <div className="input-group-text">
@@ -42,7 +69,8 @@ export default function Registro() {
                 <input
                   type="email"
                   id="email"
-                  className="form-control"
+                  {...register("email",{required:true})}
+                  className={"form-control"+ (errors.email ? " is-invalid": "")}
                   placeholder="Correo electronico"/>
                 <div className="input-group-append">
                   <div className="input-group-text">
@@ -54,6 +82,7 @@ export default function Registro() {
                 <input
                   type="password"
                   id="password"
+                  {...register("password",{required:true})}
                   className="form-control"
                   placeholder="Contraseña"/>
                 <div className="input-group-append">
@@ -66,6 +95,14 @@ export default function Registro() {
                 <input
                   type="password"
                   id="password2"
+                  {...register("password2",{required:true, 
+                    validate: (value)=>{
+                      if(watch("password") !== value){
+                        setError("passError")
+                      }else{
+                        clearErrors()
+                      }
+                    }})}
                   className="form-control"
                   placeholder="Repita la contraseña" />
                 <div className="input-group-append">
@@ -74,6 +111,7 @@ export default function Registro() {
                   </div>
                 </div>
               </div>
+              {errors.passError && <span style={{color:"red"}}>Las contraseñas no coinciden</span>}
               <div className="row">
                 <div className="col-8">
                   <div className="icheck-primary">

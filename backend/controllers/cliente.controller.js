@@ -15,10 +15,10 @@ function consultarClientes(peticion = request,respuesta = response){
 // Crea un nuevo cliente
 async function crearCliente(peticion = request, respuesta = response){
 
-    const {identificacion,password} = peticion.body;
+    const {email,password} = peticion.body;
     let resultado;
     try {
-        resultado = await ClienteModelo.findOne({identificacion});
+        resultado = await ClienteModelo.findOne({email});
     } catch (error) {
         respuesta.status(500).send({mensaje:"Error al buscar"});
     }
@@ -30,8 +30,9 @@ async function crearCliente(peticion = request, respuesta = response){
     
         ClienteModelo.create(peticion.body).then((clienteCreado)=>{
             respuesta.status(200).send({mensaje: "El cliente fue creado", clienteCreado});
-        }).catch(()=>{
+        }).catch((res)=>{
             respuesta.status(400).send({mensaje:"No se pudo crear el cliente"});
+            console.error(res);
         });
     }
 }
