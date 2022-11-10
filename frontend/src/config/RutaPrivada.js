@@ -1,14 +1,14 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
-import Inicio from '../pages/home';
 
-export default function RutaPrivada({children}) {
+export default function RutaPrivada({children, isAuth}) {
 
-    const token = sessionStorage.getItem("token");
-
-    if(token){
+    console.log("Ruta privada renderizada.");
+    console.log("Valor de isAuth: " + isAuth);
+    
+    if(isAuth){
       return children;
-    }else {
-       return <Navigate to={"/login"}/>
-    }
+    }else return (
+    <Navigate to={"/login"}/>
+    );
 };

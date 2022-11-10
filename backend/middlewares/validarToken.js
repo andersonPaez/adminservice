@@ -13,7 +13,7 @@ function validarToken(peticion = request, respuesta = response, next){
                 respuesta.status(401).send({mensaje:"Autenticacion no valida"});
             }
         }else{
-            respuesta.status(400).send({mensaje:"No existen el token"});
+            respuesta.status(400).send({mensaje:"No existe el token"});
         }
     } catch (error) {
         respuesta.status(500).send({mensaje: "Error interno del servidor (token)"});

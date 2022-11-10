@@ -7,7 +7,8 @@ const cliente = {
     apellido : {type: String, required: [true, "El apellido es requerido."]},
     email : {type: String, unique: true, required: [true, "El email es requerido."]},
     telefono : String,
-    password : {type: String, required:[true, "La contraseña es requerida."]}
+    password : {type: String, required:[true, "La contraseña es requerida."]},
+    tipo: {type:String, enum:["ADMIN","AGENTE","CLIENTE"]}
 }
 
 const clienteSquema = new Schema(cliente);

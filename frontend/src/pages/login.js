@@ -1,20 +1,24 @@
 import React from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import {urlBackend} from "../config/constants";
+import { useForm } from "react-hook-form";
 
-export default function Login() {
+export default function Login({setIsAuth}) {
 
   const navigate = useNavigate();
+  const {register,handleSubmit,formState:{errors}} = useForm();
 
-  async function validarInico(event) {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+  async function validarInico(data) {
+    
+    const email = data.email;
+    const password = data.password;
 
     try {
-      const respuesta = await axios.post("http://127.0.0.1:3001/autenticacion",{email: email,password:password});
-      sessionStorage.setItem("token",respuesta.data.token);
+      const respuesta = await axios.post(urlBackend +"/autenticacion",{email: email, password:password});
+      localStorage.setItem("token",respuesta.data.token);
       navigate("/admin");
+      setIsAuth(true);
     } catch (error) {
       alert(error.response.data.mensaje);
     }
@@ -32,11 +36,11 @@ export default function Login() {
           <div className="card-body login-card-body">
             <p className="login-box-msg">Iniciar Sesion</p>
             {/* Formulario */}
-            <form onSubmit={validarInico}>  
+            <form onSubmit={handleSubmit(validarInico)}>  
               <div className="input-group mb-3">
                 <input
                   type="email"
-                  name="email"
+                  {...register("email")}
                   className="form-control"
                   placeholder="Correo Electronico"/>
                 <div className="input-group-append">
@@ -48,7 +52,7 @@ export default function Login() {
               <div className="input-group mb-3">
                 <input
                   type="password"
-                  name="password"
+                  {...register("password")}
                   className="form-control"
                   placeholder="Contraseña" />
                 <div className="input-group-append">
@@ -76,9 +80,14 @@ export default function Login() {
               <a href="forgot-password.html">Olvide mi contraseña</a>
             </p>
             <p className="mb-0">
-              <a href="register.html" className="text-center">
-                No tengo cuenta
-              </a>
+              <Link to={"/registro"} className="text-center">
+                Registrarse
+              </Link>
+            </p>
+            <p className="mb-0">
+              <Link to={"/"} className="text-center">
+                Pagina principal
+              </Link>
             </p>
           </div>
         </div>

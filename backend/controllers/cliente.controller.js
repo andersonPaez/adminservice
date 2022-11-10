@@ -15,23 +15,24 @@ function consultarClientes(peticion = request,respuesta = response){
 // Crea un nuevo cliente
 async function crearCliente(peticion = request, respuesta = response){
 
-    const {identificacion,password} = peticion.body;
+    const {email,password} = peticion.body;
     let resultado;
     try {
-        resultado = await ClienteModelo.findOne({identificacion});
+        resultado = await ClienteModelo.findOne({email});
     } catch (error) {
         respuesta.status(500).send({mensaje:"Error al buscar"});
     }
 
    if(resultado){
-        respuesta.send({mensaje: "cliente ya existe"});
+        respuesta.status(400).send({mensaje: "cliente ya existe"});
     }else{
         peticion.body.password = hashSync(password,genSaltSync()); // Encriptacion de la contraseña.
     
         ClienteModelo.create(peticion.body).then((clienteCreado)=>{
-            respuesta.send({mensaje: "El cliente fue creado", clienteCreado});
-        }).catch(()=>{
-            respuesta.send({mensaje:"No se pudo crear el cliente"});
+            respuesta.status(200).send({mensaje: "El cliente fue creado", clienteCreado});
+        }).catch((res)=>{
+            respuesta.status(400).send({mensaje:"No se pudo crear el cliente"});
+            console.error(res);
         });
     }
 }
@@ -50,15 +51,15 @@ async function consultaCliente(peticion = request,respuesta = response){
     }
 
     if(resultado){
-        respuesta.send({mensaje: "cliente encontrado",resultado});
+        respuesta.status(200).send(resultado);
     }else{
-        respuesta.send({mensaje:"Cliente no existe"});
+        respuesta.status(400).send({mensaje:"Cliente no existe"});
     }
 }
 // Modifica un cliente
 async function modificarCliente(peticion = request,respuesta = response){
 
-    const {_id, ...cliente} = peticion.body;
+    const {_id, password, ...cliente} = peticion.body;
     let resultado;
     try {
         resultado = await ClienteModelo.findById(_id);
@@ -66,8 +67,11 @@ async function modificarCliente(peticion = request,respuesta = response){
         respuesta.status(500).send({mensaje:"Error al buscar"});
     }
     if(resultado){
-        await ClienteModelo.updateOne({_id:_id},cliente);
-        respuesta.send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
+
+        peticion.body.password = hashSync(password,genSaltSync()); // Encriptacion de la contraseña.
+
+        await ClienteModelo.updateOne({_id:_id},peticion.body);
+        respuesta.status(200).send({mensaje:`Se modifico el cliente: ${resultado.nombre}`});
     }else{
         respuesta.status(400).send({mensaje: "Cliente no existe"});
     }
