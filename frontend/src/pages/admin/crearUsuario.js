@@ -10,7 +10,7 @@ export default function CrearUsuario() {
   const params = useParams();
 
   const token = localStorage.getItem("token");
-  const {register, handleSubmit, formState:{errors},reset} = useForm();
+  const {register, handleSubmit, formState:{errors},reset,watch,setError,clearErrors} = useForm();
   const [usuario, setUsuario] = useState({});
 
   function submit(data){
@@ -151,6 +151,21 @@ export default function CrearUsuario() {
                         {errors.telefono && <span style={{color:"red"}}>*campo requerido</span>}
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="tipo">Tipo usuario:</label>
+                        <select 
+                        defaultValue={params.id !== "new" ? usuario.tipo : ""} 
+                        className={"form-control" + (errors.tipo ? " is-invalid":"")} 
+                        {...register("tipo",{required: true})} 
+                        id="tipo">
+                            <option value={""}>Seleccione...</option>
+                            <option value={"ADMIN"}>Administrador</option>
+                            <option value={"AGENTE"}>Agente</option>
+                            <option value={"CLIENTE"}>Usuario general</option>
+                        </select>
+                        {errors.tipo && <span style={{color:"red"}}>*campo requerido</span>}
+                    </div>
+
                     <div className="row">
                         <div className="col">
                             <div className="form-group">
@@ -171,11 +186,18 @@ export default function CrearUsuario() {
                                 <input
                                 type="password"
                                 className={"form-control" + (errors.passwordConfirm ? " is-invalid":"")}
-                                id="passwordConfirm"
-                                name='passwordConfirm'
-                                // {...register("passwordConfirm",{required: true})}
+                                id="password2"
+                                name='password2'
+                                {...register("password2",{required: true,
+                                validate:(value)=>{
+                                  if(watch("password") !== value){
+                                    setError("passError")
+                                  }else{
+                                    clearErrors()
+                                  }
+                                }})}
                                 placeholder="Repite la contraseña"/>
-                                {errors.passwordConfirm && <span style={{color:"red"}}>*campo requerido</span>}
+                                {errors.passError && <span style={{color:"red"}}>Las contraseñas no coinciden.</span>}
                             </div>
                         </div>
                     </div>

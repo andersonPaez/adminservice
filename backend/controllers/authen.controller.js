@@ -12,7 +12,7 @@ async function autenticacion(peticion = request, respuesta = response){
     if(cliente){
         const validacion = compareSync(password,cliente.password);
         if(validacion){
-            jwt.sign({_id: cliente.id, nombre: cliente.nombre, tipo: cliente.tipo},"grupo09adminservice",{expiresIn:3600},(error,token)=>{
+            jwt.sign({_id: cliente.id, nombre: cliente.nombre, apellido: cliente.apellido, tipo: cliente.tipo},"grupo09adminservice",{expiresIn:3600},(error,token)=>{
                 if (error) {
                     respuesta.status(500).send({mensaje: "Error al generar token",error});
                 }else{

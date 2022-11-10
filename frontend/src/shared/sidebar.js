@@ -1,30 +1,28 @@
 import {React, useState} from "react";
 import {Link} from "react-router-dom";
 import iconAdmin from "../assets/icons/user-tie-solid.svg";
-import {FaUsers,FaUserPlus,FaUserEdit} from "react-icons/fa";
+import {FaUsers,FaUserPlus,FaUserEdit,FaUserTie} from "react-icons/fa";
+import jwt_decode from "jwt-decode";
 
-export default function Sidebar() {
+export default function Sidebar() { 
 
+  const payload = jwt_decode(localStorage.getItem("token"));
   const [itemUsuarioOpen, setItemUsuarioOpen] = useState(true);
 
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4 altura" style={{height:"100vh"}}>
       <Link to="/" className="brand-link">
-        <span className="brand-text font-weight-light">AdminService</span>
+        <span className="brand-text font-weight-light"><b style={{color:"#2470EC"}}>Admin</b><b style={{color:"#BAC7DE"}}>Service</b></span>
       </Link>
       <div>
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
-              <img
-                src={iconAdmin}
-                className="img-circle elevation-2"
-                alt="iconoAdmin"
-              />
+            <FaUserTie size={28} color={"#fff"} className="img-circle elevation-2"/>
             </div>
             <div className="info">
               <Link>
-                Administrador
+                <b style={{color:"#CCE929"}}>{payload.nombre} {payload.apellido}</b>
               </Link>
             </div>
           </div>
@@ -53,7 +51,7 @@ export default function Sidebar() {
                 <li className="nav-item">
                   <Link to={"usuarios/crear/new"}className="nav-link">
                     <FaUserPlus className="nav-icon"/>
-                    <p>Crear o modificar</p>
+                    <p>Crear o Modificar</p>
                   </Link>
                 </li>
               </ul>
