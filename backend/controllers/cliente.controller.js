@@ -24,7 +24,7 @@ async function crearCliente(peticion = request, respuesta = response){
     }
 
    if(resultado){
-        respuesta.status(400).send({mensaje: "cliente ya existe"});
+        respuesta.status(400).send({mensaje: "Correo de cliente ya existe"});
     }else{
         peticion.body.password = hashSync(password,genSaltSync()); // Encriptacion de la contraseña.
     
