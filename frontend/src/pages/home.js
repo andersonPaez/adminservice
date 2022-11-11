@@ -4,7 +4,7 @@ import logo from "../assets/image/adminServiceLogo.png";
 
 export default function Home() {
 	return (
-		<div>
+		<div className="home">
 			<header>
 				<div>
 					<img src={logo} alt="" />
@@ -15,6 +15,7 @@ export default function Home() {
 					<li><Link to={"/"}>Inicio</Link></li>
 					<li><Link to={"/registro"}>Registrarse</Link></li>
 					<li><Link to={"/admin"}>Dashboard</Link></li>
+					<li><Link to={"/login"}>Ingresar</Link></li>
 				</ul>
 			</nav>
 			<article>
