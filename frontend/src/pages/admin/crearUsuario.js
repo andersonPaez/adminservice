@@ -72,7 +72,7 @@ export default function CrearUsuario() {
   
   return (
     <>
-      <ContentHeader titulo={"Crear usuario"} pathName={"Usuarios"} path={"/admin"} current={"crear usuario"}/>
+      <ContentHeader titulo={"Crear/Modificar usuario"} pathName={"Usuarios"} path={"/admin"} current={"crear usuario"}/>
       <section className="content">
         <div className="container-fluid">
           <div className="row">

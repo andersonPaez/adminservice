@@ -117,6 +117,15 @@ export default function ListarUsuarios() {
                               rowSpan={1}
                               colSpan={1}
                               aria-label="Engine version: activate to sort column ascending">
+                              Tipo Usuario
+                            </th>
+                            <th
+                              className="sorting"
+                              tabIndex={0}
+                              aria-controls="example2"
+                              rowSpan={1}
+                              colSpan={1}
+                              aria-label="Engine version: activate to sort column ascending">
                               Opciones
                             </th>
                           </tr>
@@ -132,6 +141,7 @@ export default function ListarUsuarios() {
                               <td>{usuario.apellido}</td>
                               <td>{usuario.email}</td>
                               <td>{usuario.telefono}</td>
+                              <td>{usuario.tipo}</td>
                               <td>
                                 <div
                                   className="btn-group"

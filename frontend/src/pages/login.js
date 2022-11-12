@@ -77,16 +77,16 @@ export default function Login({setIsAuth}) {
             </form>
             {/* Fin del formulario*/}
             <p className="mb-1">
-              <a href="forgot-password.html">Olvide mi contraseña</a>
+              <a href="forgot-password.html">Olvide mi contraseña!</a>
             </p>
             <p className="mb-0">
               <Link to={"/registro"} className="text-center">
-                Registrarse
+                ¿No estas registrado? Registrate.
               </Link>
             </p>
             <p className="mb-0">
               <Link to={"/"} className="text-center">
-                Pagina principal
+                 Ir a pagina principal
               </Link>
             </p>
           </div>

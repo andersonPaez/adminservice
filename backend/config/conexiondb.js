@@ -1,9 +1,10 @@
+const URLBASEDATOS = require("dotenv").config();
 const mongoose = require("mongoose");
 
-const uri = "mongodb://127.0.0.1:27017/adminservice";
+//const urlBaseDatos = "mongodb+srv://adminservice:adminservice@cluster0.xsuc55x.mongodb.net/adminservice?retryWrites=true&w=majority";
 
 const conexionDb = ()=>{
-    mongoose.connect(uri).then(() => {
+    mongoose.connect(process.env.URLBASEDATOS).then(() => {
     console.log("Conexion exitosa.");
 }).catch(() => {
     console.log("Falla en la conexion.");
