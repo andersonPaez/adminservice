@@ -1,4 +1,4 @@
-const URLBASEDATOS = require("dotenv").config();
+const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 
 //const urlBaseDatos = "mongodb+srv://adminservice:adminservice@cluster0.xsuc55x.mongodb.net/adminservice?retryWrites=true&w=majority";
