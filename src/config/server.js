@@ -8,7 +8,7 @@ const dotenv = require("dotenv").config();
 
 class server{
     constructor(){
-        this.puerto = process.env.PUERTO;
+        this.puerto = process.env.PORT;
         this.app = express();
         this.middlewares();
         this.app.listen(this.puerto,()=>{
